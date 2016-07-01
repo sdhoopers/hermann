@@ -28,14 +28,4 @@ node {
   // Archive the built artifacts
   archive (includes: 'pkg/*.gem')
 
-  // publish html
-  // "target:" shouldn't be needed, https://issues.jenkins-ci.org/browse/JENKINS-29711.
-  publishHTML (target: [
-      allowMissing: false,
-      alwaysLinkToLastBuild: false,
-      keepAll: true,
-      reportDir: 'coverage',
-      reportFiles: 'index.html',
-      reportName: "RCov Report"
-    ])
 }
