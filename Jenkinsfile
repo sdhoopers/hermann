@@ -7,31 +7,35 @@ properties([[$class: 'BuildDiscarderProperty',
 stage ('Build') {
 
   node {
-    notifyStarted()
+    try {
+      notifyStarted()
 
-    // Checkout
-    checkout scm
+      // Checkout
+      checkout scm
 
-    // install required bundles
-    sh 'bundle install'
+      // install required bundles
+      sh 'bundle install'
 
-    // build and run tests with coverage
-    sh 'bundle exec rake build spec'
+      // build and run tests with coverage
+      sh 'bundle exec rake build spec'
 
-    // Archive the built artifacts
-    archive (includes: 'pkg/*.gem')
+      // Archive the built artifacts
+      archive (includes: 'pkg/*.gem')
 
-    // publish html
-    publishHTML ([
-        allowMissing: false,
-        alwaysLinkToLastBuild: false,
-        keepAll: true,
-        reportDir: 'coverage',
-        reportFiles: 'index.html',
-        reportName: "RCov Report"
-      ])
-
-    notifySuccessful()
+      // publish html
+      publishHTML ([
+          allowMissing: false,
+          alwaysLinkToLastBuild: false,
+          keepAll: true,
+          reportDir: 'coverage',
+          reportFiles: 'index.html',
+          reportName: "RCov Report"
+        ])
+      notifySuccessful()
+    } catch (Exception e) {
+      currentBuild.result = "FAILED"
+      notifyFailed()
+    }
   }
 }
 
@@ -62,6 +66,22 @@ def notifySuccessful() {
       to: 'bitwiseman@bitwiseman.com',
       subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
       body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+        <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+    )
+}
+
+def notifyFailed() {
+  slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+
+  hipchatSend (color: 'RED', notify: true,
+      message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+    )
+
+  emailext (
+      to: 'bitwiseman@bitwiseman.com',
+      subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
         <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
       recipientProviders: [[$class: 'DevelopersRecipientProvider']]
     )
