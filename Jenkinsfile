@@ -5,10 +5,11 @@ pipeline {
     stages {
         stage ('Build') {
             agent {
-                dockerfile true
+                dockerfile {
+                    reuseNode true
+                }
             }
             steps {
-                checkout scm
                 sh 'cat Jenkinsfile'
             }
         }
