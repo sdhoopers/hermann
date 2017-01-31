@@ -16,7 +16,7 @@ pipeline {
                 sh 'bundle exec rake build spec'
 
                 // publish html
-                publishHTML ([
+                publishHTML (target:[
                     allowMissing: false,
                     alwaysLinkToLastBuild: false,
                     keepAll: true,
