@@ -2,16 +2,15 @@
 
 pipeline {
     agent any
-    options {
-        skipDefaultCheckout()
-    }
     stages {
         stage ('Build') {
-            agent any
-            options {
-                skipDefaultCheckout()
+            agent {
+                docker {
+                    image 'ruby:2.3'
+                }
             }
             steps {
+                checkout scm
                 sh 'cat Jenkinsfile'
             }
         }
