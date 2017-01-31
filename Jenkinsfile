@@ -6,9 +6,15 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr:'10'))
     }
     stages {
+        stage ('Prepare') {
+            steps {
+                stash name: 'test', includes: '**', useDefaultExcludes: false
+            }
+        }
         stage ('Build') {
             agent any
             steps {
+                unstash name: 'test'
                 // install required bundles
                 sh 'bundle install'
 
