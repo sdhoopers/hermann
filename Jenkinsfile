@@ -1,16 +1,14 @@
 #!groovy
 
 pipeline {
-    agent {
-        dockerfile true
-    }
+    agent any
     stages {
         stage ('Build') {
-            // agent {
-            //     dockerfile true
-            // }
+            agent {
+                dockerfile true
+            }
             steps {
-                // checkout scm
+                checkout scm
                 sh 'cat Jenkinsfile'
             }
         }
