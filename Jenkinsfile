@@ -17,17 +17,17 @@ stage ('Build') {
     sh 'bundle exec rake build spec'
 
     // Archive the built artifacts
-    archive (includes: 'pkg/*.gem')
+    archive includes: 'pkg/*.gem'
 
     // publish html
-    publishHTML ([
+    publishHTML target: [
         allowMissing: false,
         alwaysLinkToLastBuild: false,
         keepAll: true,
         reportDir: 'coverage',
         reportFiles: 'index.html',
-        reportName: "RCov Report"
-      ])
+        reportName: 'RCov Report'
+      ]
 
   }
 }
