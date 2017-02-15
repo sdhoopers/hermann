@@ -1,5 +1,6 @@
 #!groovy
-@Library('bitwiseman-shared@blog/declarative/notifications') _ // <1>
+// moved this into an implicitly loaded library in the local library.
+//@Library('bitwiseman-shared@blog/declarative/notifications') _
 
 pipeline {
   agent {
