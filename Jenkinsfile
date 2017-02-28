@@ -2,7 +2,7 @@
 // moved this into an implicitly loaded library in the local library.
 //@Library('bitwiseman-shared@blog/declarative/notifications') _
 
-def acme = new Acme(this)
+def acme = new Acme(steps)
 acme.caution('something')
 
 
