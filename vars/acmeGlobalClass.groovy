@@ -1,10 +1,9 @@
-// vars/acme.groovy
 def setName(value) {
-    namePrivate = value
+    privateName = value
 }
 def getName() {
-    namePrivate
+    privateName
 }
 def caution(message) {
-    echo "Hello, ${namePrivate}! CAUTION: ${message}"
+    echo "Hello, ${name}! CAUTION: ${message}"
 }

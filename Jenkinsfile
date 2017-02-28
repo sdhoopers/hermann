@@ -2,10 +2,11 @@
 // moved this into an implicitly loaded library in the local library.
 //@Library('bitwiseman-shared@blog/declarative/notifications') _
 
-def acme = new Acme(steps)
-acme.caution('something')
+// def acme = new Acme(steps)
+// acme.caution('something')
 
 
-// acmeGlobalClass.setName 'test'
-// echo acmeGlobalClass.namePrivate
-// acmeGlobalClass.caution 'be careful'
+acmeGlobalClass.setName 'test'
+echo acmeGlobalClass.privateName
+echo acmeGlobalClass.name
+acmeGlobalClass.caution 'be careful'
