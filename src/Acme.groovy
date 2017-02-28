@@ -1,5 +1,5 @@
 class Acme implements Serializable {
-    private final Script script
+    def script
     private String name = 'human'
     Acme(Script script) {
         this.script = script
