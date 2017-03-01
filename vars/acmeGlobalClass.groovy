@@ -4,6 +4,6 @@ def setName(value) {
 def getName() {
     privateName
 }
-def caution(message) {
+def Caution(message) {
     echo "Hello, ${name}! CAUTION: ${message}"
 }

@@ -6,7 +6,9 @@
 // acme.caution('something')
 
 
-acmeGlobalClass.setName 'test'
-echo acmeGlobalClass.privateName
-echo acmeGlobalClass.name
-acmeGlobalClass.caution 'be careful'
+// acmeGlobalClass.setName 'test'
+// echo acmeGlobalClass.privateName
+// echo acmeGlobalClass.name
+// acmeGlobalClass.caution 'be careful'
+
+SayHello('Liam')
