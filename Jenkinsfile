@@ -11,4 +11,7 @@
 // echo acmeGlobalClass.name
 // acmeGlobalClass.caution 'be careful'
 
-SayHello('Liam')
+// SayHello('Liam')
+def z = new org.acme.Zot()
+z.Zing('human')
+z.Zap('fail')
