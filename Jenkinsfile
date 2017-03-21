@@ -1,14 +1,18 @@
+def callback() {
+  echo 'hello'
+}
+
 pipeline {
   agent {
     docker {
       image 'ruby:2.3'
     }
-
   }
   stages {
     stage('Install') {
       steps {
         sh 'bundle install'
+        callback()
       }
     }
     stage('Build') {
@@ -26,15 +30,6 @@ pipeline {
     stage('Test') {
       steps {
         sh 'bundle exec rake spec'
-        publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: true,
-                        reportDir: 'coverage',
-                        reportFiles: 'index.html',
-                        reportName: 'RCov Report'
-                      ])
-      }
     }
     post {
       always {
