@@ -1,44 +1,16 @@
-def callback() {
-  echo 'hello'
-}
 
 pipeline {
-  agent {
-    docker {
-      image 'ruby:2.3'
-    }
+  agent any
+  environment {
+    test = "${test2 + test3}"
+    test2 = "value2"
+    test3 = "${test2}"
   }
   stages {
     stage('Install') {
       steps {
-        sh 'bundle install'
-        callback()
+        sh 'echo "${test}"'
       }
-    }
-    stage('Build') {
-      steps {
-        sh 'bundle exec rake build'
-      }
-      post {
-        success {
-          archive 'pkg/*.gem'
-
-        }
-
-      }
-    }
-    stage('Test') {
-      steps {
-        sh 'bundle exec rake spec'
-    }
-    post {
-      always {
-        echo "Send notifications for result: ${currentBuild.result}"
-
-      }
-
-    }
-    options {
-      buildDiscarder(logRotator(numToKeepStr: '10'))
     }
   }
+}
