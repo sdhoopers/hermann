@@ -1,7 +1,9 @@
 #!groovy
-@Library('bitwiseman-shared@blog/declarative/notifications') _ // <1>
 
 pipeline {
+  libraries {
+    lib 'bitwiseman-shared@blog/declarative/notifications'
+  }
   agent {
     // Use docker container
     docker {
