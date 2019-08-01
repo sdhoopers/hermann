@@ -16,12 +16,14 @@ pipeline {
       steps {
         // install required bundles
         sh 'bundle install'
+
       }
     }
     stage ('Build') {
       steps {
         // build
-        sh 'bundle exec rake build'
+        //sh 'bundle exec rake build'
+        sh 'docker build -t todoapp:latest .'
       }
 
       post {
