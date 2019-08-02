@@ -26,14 +26,15 @@ pipeline {
         //sh 'docker build -t todoapp:latest .'
         sh 'cat Gemfile.lock'
       }
-
-      post {
-        success {
-          // Archive the built artifacts
-          archive includes: 'pkg/*.gem'
-        }
+    }
+    stage ('OWASP Dependency-Check') {
+      steps {
+        dependencyCheckAnalyzer datadir: '', hintsFile: '', includeCsvReports: false, includeHtmlReports: false, includeJsonReports: false, includeVulnReports: false, isAutoupdateDisabled: false, outdir: '', scanpath: './Gemfile.lock', skipOnScmChange: false, skipOnUpstreamChange: false, suppressionFile: '', zipExtensions: ''
       }
     }
+   
+
+    
     stage ('Test') {
       steps {
         // run tests with coverage
