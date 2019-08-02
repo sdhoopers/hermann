@@ -27,13 +27,39 @@ pipeline {
         sh 'cat Gemfile.lock'
       }
     }
-    stage ('OWASP Dependency-Check') {
+    stage("Dependency Check") {
       steps {
-        dependencyCheckAnalyzer datadir: '', hintsFile: '', includeCsvReports: false, includeHtmlReports: false, includeJsonReports: false, includeVulnReports: false, isAutoupdateDisabled: false, outdir: '', scanpath: './Gemfile.lock', skipOnScmChange: false, skipOnUpstreamChange: false, suppressionFile: '', zipExtensions: ''
+        dependencyCheckAnalyzer(
+          datadir: 'dependency-check-data',
+          suppressionFile: '',
+          hintsFile: '',
+          includeCsvReports: false,
+          includeHtmlReports: true,
+          includeJsonReports: true,
+          isAutoupdateDisabled: false,
+          outdir: '',
+          scanpath: '',
+          skipOnScmChange: false,
+          skipOnUpstreamChange: false,
+          zipExtensions: '',
+          includeVulnReports: true)
+
+          dependencyCheckPublisher(
+            canComputeNew: false,
+            defaultEncoding: '',
+            failedTotalAll: '2', // fail if greater than 3 vulns
+            failedTotalHigh: '0', // fail if any high vulns
+            healthy: '',
+            pattern: '',
+            unHealthy: '2' //build is unhealthy while there are more than 2 vulns
+          )
+
+          archiveArtifacts(
+            allowEmptyArchive: true,
+            artifacts: '**/dependency-check-report.*',
+            onlyIfSuccessful: true)
       }
     }
-   
-
     
     stage ('Test') {
       steps {
