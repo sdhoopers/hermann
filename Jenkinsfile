@@ -2,9 +2,7 @@
 
 pipeline {
   agent {
-    // Use docker container
-    docker {
-      image 'ruby:2.3'
+    any
     }
   }
   options {
@@ -13,6 +11,11 @@ pipeline {
   }
   stages {
     stage ('Install') {
+      agent {
+        docker { 
+          image 'ruby:2.3'
+        }
+      }
       steps {
         // install required bundles
         sh 'bundle install'
@@ -29,7 +32,7 @@ pipeline {
     }
     stage ("Dependency Check") {
       steps {
-        dependencyCheckAnalyzer(
+        depencyCheckAnalyzer(
           datadir: 'dependency-check-data',
           suppressionFile: '',
           hintsFile: '',
