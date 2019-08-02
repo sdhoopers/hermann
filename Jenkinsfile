@@ -23,7 +23,8 @@ pipeline {
       steps {
         // build
         //sh 'bundle exec rake build'
-        sh 'docker build -t todoapp:latest .'
+        //sh 'docker build -t todoapp:latest .'
+        sh 'cat Gemfile.lock'
       }
 
       post {
