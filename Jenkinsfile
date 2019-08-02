@@ -27,7 +27,7 @@ pipeline {
         sh 'cat Gemfile.lock'
       }
     }
-    stage("Dependency Check") {
+    stage ("Dependency Check") {
       steps {
         dependencyCheckAnalyzer(
           datadir: 'dependency-check-data',
@@ -45,13 +45,13 @@ pipeline {
           includeVulnReports: true)
 
           dependencyCheckPublisher(
-            canComputeNew: false,
-            defaultEncoding: '',
-            failedTotalAll: '2', // fail if greater than 3 vulns
+            //canComputeNew: false,
+            //defaultEncoding: '',
+            //failedTotalAll: '2', // fail if greater than 3 vulns
             failedTotalHigh: '0', // fail if any high vulns
-            healthy: '',
+            //healthy: '',
             pattern: '',
-            unHealthy: '2' //build is unhealthy while there are more than 2 vulns
+            //unHealthy: '2' //build is unhealthy while there are more than 2 vulns
           )
 
           archiveArtifacts(
