@@ -1,10 +1,8 @@
 #!groovy
 
 pipeline {
-  agent {
-    any
-    }
-  }
+  agent any
+  
   options {
     // Only keep the 10 most recent builds
     buildDiscarder(logRotator(numToKeepStr:'10'))
@@ -65,6 +63,11 @@ pipeline {
     }
     
     stage ('Test') {
+      agent {
+        docker {
+          image 'ruby:2.3'
+        }
+      }
       steps {
         // run tests with coverage
         sh 'bundle exec rake spec'
